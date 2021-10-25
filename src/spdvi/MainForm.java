@@ -5,15 +5,22 @@
  */
 package spdvi;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 
 /**
  *
  * @author Alumne
  */
 public class MainForm extends javax.swing.JFrame {
-    File folder = new File("src/spdvi/images");
+    File folder = new File("src/spdvi/images/");
     File[] listOfFiles = folder.listFiles();
     /**
      * Creates new form MainForm
@@ -37,6 +44,12 @@ public class MainForm extends javax.swing.JFrame {
         btnImages = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lblImage.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                lblImagePropertyChange(evt);
+            }
+        });
 
         lstImage.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "prueba" };
@@ -92,6 +105,44 @@ public class MainForm extends javax.swing.JFrame {
         lstImage.setModel(imageListModel);
     }//GEN-LAST:event_btnImagesActionPerformed
 
+    private void lblImagePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_lblImagePropertyChange
+        String fileName = lstImage.getSelectedValue();
+        try {
+            
+            BufferedImage bufferedImage = ImageIO.read(new File("src/spdvi/images/" + fileName));
+            ImageIcon icon = resizeImageIcon(bufferedImage, lblImage.getWidth(), lblImage.getHeight());
+            lblImage.setIcon(icon);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_lblImagePropertyChange
+
+    
+    private ImageIcon resizeImageIcon(BufferedImage originalImage, int desiredWidth, int desiredHeight) {
+        // Iniciamos las 2 variables de anchura y altura de la imagen nuevas
+        int newHeight = 0;
+        int newWidth = 0;
+        // Hacemos Casting de float para que no de entero y nos de el valor que toca
+        float aspectRatio = (float)originalImage.getWidth() / (float)originalImage.getHeight();
+        // Comprovamos si la imagen es mas alta o mas ancha.
+        if (originalImage.getWidth() > originalImage.getHeight()) {
+            // Asignamos los nuevos valores dependiendo de ello y calculamos.
+            newWidth = desiredWidth;
+            newHeight = Math.round(desiredWidth / aspectRatio);
+        } else {
+            newHeight = desiredHeight;
+            newWidth = Math.round(desiredWidth * aspectRatio) ;
+        }
+        // Escalamos la imagen
+        Image resultingImage = originalImage.getScaledInstance(desiredWidth,desiredHeight, Image.SCALE_SMOOTH);
+        BufferedImage outputImage = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.SCALE_DEFAULT);
+        // Permite dibujar de nuevo la imagen al BufferedImage
+        outputImage.getGraphics().drawImage(resultingImage, 0, 0, null);
+        ImageIcon imageIcon = new ImageIcon(outputImage);
+        // Devolvemos la imagen
+        return imageIcon;
+       
+    }
     /**
      * @param args the command line arguments
      */
