@@ -6,7 +6,7 @@
 package spdvi;
 
 import java.io.File;
-import javax.swing.JList;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -34,7 +34,7 @@ public class MainForm extends javax.swing.JFrame {
         lblImage = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstImage = new javax.swing.JList<>();
-        btnSeeImage = new javax.swing.JButton();
+        btnImages = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,10 +45,10 @@ public class MainForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(lstImage);
 
-        btnSeeImage.setText("Ver");
-        btnSeeImage.addActionListener(new java.awt.event.ActionListener() {
+        btnImages.setText("Load Images");
+        btnImages.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSeeImageActionPerformed(evt);
+                btnImagesActionPerformed(evt);
             }
         });
 
@@ -60,13 +60,13 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnImages, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnSeeImage, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(47, 47, 47))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -76,16 +76,21 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                     .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSeeImage)
+                .addComponent(btnImages)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSeeImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeeImageActionPerformed
-        
-    }//GEN-LAST:event_btnSeeImageActionPerformed
+    private void btnImagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImagesActionPerformed
+        DefaultListModel imageListModel = new DefaultListModel();
+        for (File file : listOfFiles) {
+            imageListModel.addElement(file.getName());
+           
+        }
+        lstImage.setModel(imageListModel);
+    }//GEN-LAST:event_btnImagesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -123,7 +128,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSeeImage;
+    private javax.swing.JButton btnImages;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblImage;
     private javax.swing.JList<String> lstImage;
