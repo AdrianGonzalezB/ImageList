@@ -38,23 +38,22 @@ public class MainForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblImage = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstImage = new javax.swing.JList<>();
         btnImages = new javax.swing.JButton();
+        lblImage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        lblImage.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                lblImagePropertyChange(evt);
-            }
-        });
 
         lstImage.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "prueba" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        lstImage.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstImageValueChanged(evt);
+            }
         });
         jScrollPane1.setViewportView(lstImage);
 
@@ -62,6 +61,12 @@ public class MainForm extends javax.swing.JFrame {
         btnImages.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnImagesActionPerformed(evt);
+            }
+        });
+
+        lblImage.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                lblImagePropertyChange(evt);
             }
         });
 
@@ -74,20 +79,20 @@ public class MainForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnImages, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47))))
+                        .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                    .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnImages)
                 .addContainerGap())
@@ -106,6 +111,10 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnImagesActionPerformed
 
     private void lblImagePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_lblImagePropertyChange
+        
+    }//GEN-LAST:event_lblImagePropertyChange
+
+    private void lstImageValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstImageValueChanged
         String fileName = lstImage.getSelectedValue();
         try {
             
@@ -115,7 +124,7 @@ public class MainForm extends javax.swing.JFrame {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }//GEN-LAST:event_lblImagePropertyChange
+    }//GEN-LAST:event_lstImageValueChanged
 
     
     private ImageIcon resizeImageIcon(BufferedImage originalImage, int desiredWidth, int desiredHeight) {
